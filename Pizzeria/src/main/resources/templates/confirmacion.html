@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Confirmación del Pedido</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+
+<div class="container">
+
+<h1>Pedido Confirmado</h1>
+
+<p>Gracias, <strong th:text="${pedido.cliente.nombre}"></strong>.</p>
+<p>Tu pedido ha sido recibido correctamente.</p>
+<p><strong>Dirección de entrega:</strong> <span th:text="${pedido.cliente.direccion}"></span></p>
+<p><strong>Teléfono de contacto:</strong> <span th:text="${pedido.cliente.telefono}"></span></p>
+
+<hr/>
+
+<h3>Detalle del pedido:</h3>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Tipo</th>
+        <th>Tamaño</th>
+        <th>Cantidad</th>
+        <th>Subtotal</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${pedido.items}">
+        <td th:text="${item.pizza.tipo.nombre}"></td>
+        <td th:text="${item.pizza.tamaño.etiqueta}"></td>
+        <td th:text="${item.cantidad}"></td>
+        <td th:text="${item.subtotal}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<h3>Total a pagar: $<span th:text="${pedido.total}"></span></h3>
+
+<p><strong>Su pedido será entregado en la dirección registrada. Pago contra entrega.</strong></p>
+
+<p><a th:href="@{/catalogo}" class="button-link">Volver al catálogo</a></p>
+
+<hr/>
+<div th:insert="fragments/footer :: footer"></div>
+
+</div>
+
+</body>
+</html>

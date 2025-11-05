@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Pizzería Laxaruz | Bienvenido</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+
+<div class="container">
+
+<h1>Bienvenido a Pizzería Laxaruz</h1>
+<p>Tu pizza favorita, ahora más cerca que nunca.</p>
+
+<hr/>
+
+<h3>Opciones</h3>
+<ul>
+    <li><a th:href="@{/usuario/login}">Iniciar Sesión</a></li>
+    <li><a th:href="@{/usuario/registro}">Registrarse</a></li>
+</ul>
+
+<hr/>
+<div th:insert="fragments/footer :: footer"></div>
+
+</div>
+
+</body>
+</html>

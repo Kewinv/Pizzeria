@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+
+<div class="container">
+
+<h1>Tu Carrito de Pizzas</h1>
+
+<nav>
+    <a th:href="@{/catalogo}">Seguir comprando</a> |
+    <a th:href="@{/carrito/ver}">Actualizar carrito</a> |
+    <a th:href="@{/usuario/logout}">Cerrar sesión</a>
+</nav>
+<hr/>
+
+<!-- Flash messages -->
+<div th:if="${mensaje}" class="card">
+    <p th:text="${mensaje}"></p>
+</div>
+<div th:if="${error}" class="card">
+    <p th:text="${error}"></p>
+</div>
+
+<!-- Si el carrito está vacío -->
+<div th:if="${#lists.isEmpty(carrito)}">
+    <p>No hay pizzas en el carrito.</p>
+    <p><a th:href="@{/catalogo}">Volver al catálogo</a></p>
+</div>
+
+<!-- Si el carrito tiene elementos -->
+<div th:unless="${#lists.isEmpty(carrito)}">
+    <table border="1">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Tipo</th>
+            <th>Tamaño</th>
+            <th>Precio unitario</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item, stat : ${carrito}" th:classappend="${item.marcadoParaEliminar}? 'marcado':''">
+            <td th:text="${stat.count}"></td>
+            <td th:text="${item.tipo != null? item.tipo.name(): item.pizza.tipo.name()}"></td>
+            <td th:text="${item.tamano != null? item.tamano.name(): item.pizza.tamaño.name()}"></td>
+            <td th:text="${item.precioUnitario}"></td>
+            <td th:text="${item.cantidad}"></td>
+            <td th:text="${item.subtotal}"></td>
+            <td>
+                <form th:action="@{/carrito/eliminar}" method="post" class="inline">
+                    <input type="hidden" name="index" th:value="${stat.index}" aria-hidden="true" />
+                    <button type="submit" th:text="${item.marcadoParaEliminar} ? 'Desmarcar' : 'Marcar para eliminar'"></button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3 class="muted">Total: <span th:text="${total}"></span></h3>
+
+    <form th:action="@{/pedido/confirmar}" method="post" style="display:inline">
+        <button type="submit">Confirmar pedido (Pago contra entrega)</button>
+    </form>
+
+    <form th:action="@{/carrito/guardar}" method="post" style="display:inline;margin-left:8px">
+        <button type="submit" class="button-link">Guardar carrito</button>
+    </form>
+
+    <form th:action="@{/carrito/cancelar}" method="post" style="display:inline;margin-left:8px">
+        <button type="button" class="secondary" onclick="this.closest('form').submit();">Cancelar pedido</button>
+    </form>
+</div>
+
+<hr/>
+<div th:insert="fragments/footer :: footer"></div>
+
+</div>
+
+</body>
+</html>

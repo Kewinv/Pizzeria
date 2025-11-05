@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Catálogo de Pizzas | Pizzería Laxaruz</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+
+<div class="container">
+
+<h1>Catálogo de Pizzas</h1>
+
+<!-- Mostrar diferentes controles según si hay usuario en sesión -->
+<div th:if="${session.usuarioLogueado != null}">
+    <div class="user-controls">
+        Bienvenido,
+        <strong th:text="${session.usuarioLogueado.nombre}"></strong> |
+        <a th:href="@{/carrito/ver}">Ver carrito</a> |
+        <form th:action="@{/usuario/logout}" method="get" style="display:inline">
+            <button type="submit" class="secondary">Cerrar sesión</button>
+        </form>
+    </div>
+</div>
+<div th:if="${session.usuarioLogueado == null}">
+    <div class="user-controls">
+        <a th:href="@{/usuario/login}">Iniciar sesión</a> |
+        <a th:href="@{/usuario/registro}">Registrarse</a>
+    </div>
+</div>
+
+<hr/>
+
+<!-- Grid de tarjetas de pizza -->
+<div class="pizza-grid">
+    <div class="pizza-card smooth" th:each="tipo, stat : ${tipos}">
+
+
+        <div class="pizza-image" aria-hidden="true">
+            <img th:src="@{/images/{file}(file=${imagenPorTipo[tipo.name()] ?: 'placeholder.svg'})}"
+                 th:alt="${tipo.nombre}" />
+        </div>
+
+        <div class="pizza-body">
+            <h3 class="pizza-title" th:text="${tipo.nombre}"></h3>
+            <p class="muted">Deliciosa pizza artesanal con los mejores ingredientes.</p>
+
+            <div class="price-row">
+                <span class="label muted">Precio:</span>
+                <span class="price-text" th:text="${tipo.precioMediana}"></span>
+                <span class="currency">$</span>
+            </div>
+
+            <form th:action="@{/carrito/agregar}" method="post" class="pizza-form">
+                <!-- Enviar el tipo como enum -->
+                <input type="hidden" name="tipo" th:value="${tipo}" />
+
+                <label class="muted">Tamaño:
+                    <select name="tamanio" class="size-select">
+                        <option th:value="${T(org.laxaruzpizzas.pizzerialaxaruz.entity.TamañoPizza).PEQUEÑA}"
+                                th:data-price="${tipo.precioPequeña}"
+                                th:text="${'Pequeña - ' + tipo.precioPequeña}"></option>
+                        <option th:value="${T(org.laxaruzpizzas.pizzerialaxaruz.entity.TamañoPizza).MEDIANA}"
+                                th:selected="true" th:data-price="${tipo.precioMediana}"
+                                th:text="${'Mediana - ' + tipo.precioMediana}"></option>
+                        <option th:value="${T(org.laxaruzpizzas.pizzerialaxaruz.entity.TamañoPizza).GRANDE}"
+                                th:data-price="${tipo.precioGrande}"
+                                th:text="${'Grande - ' + tipo.precioGrande}"></option>
+                    </select>
+                </label>
+
+                <label class="muted">Cantidad:
+                    <input type="number" name="cantidad" min="1" value="1" class="qty-input" />
+                </label>
+
+                <div class="subtotal muted">Subtotal: <span class="subtotal-amount">0</span> <span class="currency">$</span></div>
+
+                <div class="card-actions">
+                    <button type="submit">Agregar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<hr/>
+<div th:insert="fragments/footer :: footer"></div>
+
+</div>
+
+<script>
+    // Script mínimo para actualizar precio y subtotal en cada tarjeta
+    (function(){
+        document.querySelectorAll('.pizza-card').forEach(function(card){
+            var select = card.querySelector('.size-select');
+            var qty = card.querySelector('.qty-input');
+            var priceText = card.querySelector('.price-text');
+            var subtotalEl = card.querySelector('.subtotal-amount');
+
+            function update(){
+                var opt = select.options[select.selectedIndex];
+                var price = parseInt(opt.getAttribute('data-price')) || 0;
+                var quantity = parseInt(qty.value) || 1;
+                priceText.textContent = price;
+                subtotalEl.textContent = price * quantity;
+            }
+
+            select.addEventListener('change', update);
+            qty.addEventListener('input', update);
+
+            // Inicializa
+            update();
+        });
+    })();
+</script>
+
+</body>
+</html>

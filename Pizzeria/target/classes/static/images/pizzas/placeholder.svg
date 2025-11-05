@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="100%" height="100%" fill="#fff5f5"/>
+  <g transform="translate(160,80)" fill="none" stroke="#c62828" stroke-width="6">
+    <circle cx="240" cy="120" r="100" fill="#fff" stroke-opacity="0.12"/>
+    <path d="M60 200c40-40 120-60 180-60s140 20 180 60" stroke-opacity="0.08"/>
+  </g>
+  <text x="50%" y="90%" font-family="Verdana, Arial, sans-serif" font-size="22" fill="#c62828" text-anchor="middle">Imagen no disponible</text>
+</svg>
+

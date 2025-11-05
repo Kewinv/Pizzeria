@@ -1,0 +1,180 @@
+/* styles.css - Minimalista con rojo (primario) y verde (secundario) */
+:root{
+    --rojo: #c62828; /* primary */
+    --rojo-claro: #ef5350;
+    --verde: #2e7d32; /* secondary */
+    --fondo: #fafafa;
+    --texto: #222;
+    --muted: #666;
+}
+
+*{box-sizing:border-box}
+html,body{
+    height:100%;
+    margin:0;
+    font-family: Inter, Roboto, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: linear-gradient(180deg, #fff 0%, var(--fondo) 100%);
+    color:var(--texto);
+}
+
+.container{
+    max-width:1000px;
+    margin:28px auto;
+    padding:20px;
+    background: #fff;
+    border-radius:10px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    border: 1px solid rgba(0,0,0,0.04);
+}
+
+h1{font-size:1.6rem;margin:0 0 12px}
+
+nav a{color:var(--rojo);text-decoration:none;margin-right:12px;font-weight:600}
+nav a:hover{color:var(--rojo-claro);text-decoration:underline}
+
+/* Formularios */
+form{margin-top:12px}
+label{display:inline-block;margin-bottom:6px;color:var(--muted)}
+input[type=text], input[type=email], input[type=password], input[type=number], select, textarea{
+    width:100%;
+    padding:10px 12px;
+    margin-bottom:12px;
+    border:1px solid rgba(0,0,0,0.12);
+    border-radius:8px;
+    background:#fff;
+    transition:box-shadow .18s ease, transform .12s ease, border-color .12s ease;
+}
+input:focus, select:focus, textarea:focus{
+    outline:none;
+    border-color:var(--rojo);
+    box-shadow: 0 4px 18px rgba(198,40,40,0.12);
+    transform:translateY(-1px);
+}
+
+button{
+    /* ahora por defecto son verdes (acción positiva) */
+    background:var(--verde);
+    color:#fff;
+    padding:8px 14px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:700;
+    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+button:hover{
+    transform:translateY(-3px);
+    box-shadow: 0 10px 30px rgba(46,125,50,0.18);
+    background:#3fa24a;
+}
+button.secondary{
+    /* secundarios ahora son rojos (acciones de cerrar/cancelar) */
+    background:var(--rojo);
+}
+button.secondary:hover{
+    background:var(--rojo-claro);
+}
+
+/* Tabla de carrito y catálogo */
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th, td{padding:10px 12px;text-align:left;border-bottom:1px solid rgba(0,0,0,0.06)}
+th{background:linear-gradient(90deg, rgba(198,40,40,0.04), rgba(46,125,50,0.02));font-weight:700}
+tr:hover td{background:rgba(0,0,0,0.02)}
+
+.badge{
+    display:inline-block;padding:6px 10px;border-radius:999px;background:var(--rojo);color:#fff;font-weight:700;font-size:0.85rem
+}
+
+.total-box{
+    margin-top:12px;padding:12px;border-radius:10px;background:linear-gradient(90deg, rgba(46,125,50,0.06), rgba(198,40,40,0.02));
+    display:flex;align-items:center;justify-content:space-between;
+}
+
+/* Footer */
+footer, .footer{margin-top:18px;padding-top:10px;border-top:1px solid rgba(0,0,0,0.04);color:var(--muted);font-size:0.9rem}
+
+/* Responsive */
+@media (max-width:700px){
+    .container{margin:10px;padding:12px}
+    th, td{font-size:0.95rem}
+    nav{font-size:0.95rem}
+}
+
+/* Micro-interacciones */
+a.button-link{display:inline-block;padding:8px 12px;background:transparent;border-radius:8px;color:var(--rojo);border:1px solid rgba(198,40,40,0.12);text-decoration:none;font-weight:600}
+a.button-link:hover{background:rgba(198,40,40,0.06)}
+
+/* Smooth subtle animation for small elements */
+.card{padding:12px;border-radius:10px;background:#fff;border:1px solid rgba(0,0,0,0.04);box-shadow:0 6px 20px rgba(0,0,0,0.04)}
+
+/* Small helpers */
+.center{display:flex;align-items:center;justify-content:center}
+.muted{color:var(--muted)}
+
+/* Inputs number small */
+input[type=number]{max-width:100px}
+
+/* Table action form button style inside */
+form.inline{display:inline}
+form.inline button{padding:6px 8px;border-radius:6px;background:transparent;color:var(--rojo);border:1px solid rgba(198,40,40,0.12)}
+form.inline button:hover{background:rgba(198,40,40,0.06)}
+
+/* Small transition utility */
+.smooth{transition:all .15s ease}
+
+/* Grid de tarjetas de pizza */
+.pizza-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap:18px;
+    margin-top:12px;
+}
+
+.pizza-card{
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    border:1px solid rgba(0,0,0,0.04);
+    border-radius:12px;
+    background:linear-gradient(180deg,#fff, #fff);
+    transition:transform .15s ease, box-shadow .18s ease, border-color .12s ease;
+}
+.pizza-card:hover{
+    transform:translateY(-6px) scale(1.01);
+    box-shadow:0 20px 40px rgba(0,0,0,0.08);
+    border-color: rgba(198,40,40,0.12);
+}
+
+.pizza-image{
+    height:140px;
+    background: linear-gradient(135deg, rgba(198,40,40,0.06), rgba(46,125,50,0.04));
+    display:flex;align-items:center;justify-content:center;
+    border-bottom:1px solid rgba(0,0,0,0.04);
+}
+.pizza-image img{max-height:100%;max-width:100%;object-fit:cover;display:block}
+
+.pizza-body{padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.pizza-title{margin:0;font-size:1.05rem}
+.price-row{display:flex;align-items:baseline;gap:6px}
+.price-text{font-weight:800;color:var(--rojo)}
+.currency{font-size:0.85rem;color:var(--muted)}
+
+.pizza-form{display:flex;flex-direction:column;gap:8px}
+.size-select{padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.08);max-width:220px}
+.qty-input{width:90px;padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.08)}
+.subtotal{margin-top:6px;font-weight:700}
+
+.card-actions{display:flex;align-items:center;justify-content:flex-end;margin-top:4px}
+.card-actions button{padding:8px 12px;border-radius:8px}
+
+/* Small responsive adjustments */
+@media (max-width:1000px){
+    .pizza-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:600px){
+    .pizza-grid{grid-template-columns:repeat(1,1fr)}
+    .pizza-image{height:180px}
+}
+
+/* Focus accessibility for interactive elements */
+.pizza-card:focus-within{box-shadow:0 18px 30px rgba(198,40,40,0.06);border-color:var(--rojo-claro)}
